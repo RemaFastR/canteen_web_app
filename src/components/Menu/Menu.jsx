@@ -5,15 +5,14 @@ import * as axios from "axios";
 import siteLogo from "../../assets/images/Logo.png";
 import categoriesLogo from "../../assets/images/lgmenu.png";
 import orderLogo from "../../assets/images/lgkorz.png";
+import Basket from "../Utility/Basket";
 
 class Menu extends React.Component {
     constructor() {
         super();
         this.state = {
             categories: [],
-            orderList: [],
-            orderPrice: 0,
-            visible: window.basketVisible
+            basket_is_visible: "visible"
         }
     }
 
@@ -21,18 +20,6 @@ class Menu extends React.Component {
         axios.get(`https://canteen-chsu.ru/api/menu?CANTEEN-API-KEY=733fb9c1-db7f-4c0f-9cc0-59877c6cd8cf`).then(response => {
             this.setState({categories: response.data})
         })
-    }
-
-    orderProducts= []
-    productForOrder = {
-        id: null,
-        quantity: 0
-    }
-
-    calculateOrderPrice(orderList){
-        let price = 0;
-        this.orderProducts.forEach(element => price += element.price * element.quantity);
-        this.setState({orderPrice:price})
     }
 
     addInOrder(product) {
@@ -55,41 +42,14 @@ class Menu extends React.Component {
         console.log(this.orderProducts)
     }
 
-    createOrder(){
-        let orderListForSend = []
-        let object = {
-            products: orderListForSend
-        }
-        let config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'CANTEEN-API-KEY': '733fb9c1-db7f-4c0f-9cc0-59877c6cd8cf'
-            }
-        }
-        this.orderProducts.forEach(element => orderListForSend.push({ id: element.id, quantity: element.quantity}));
-        console.log(JSON.stringify(object))
-        axios.post('https://canteen-chsu.ru/api/orders', JSON.stringify(object),config).then((response) => {
-            console.log(response.data)
-            alert("Ваш заказ выполнен, номер заказа - " + response.data.id)
-        })
-    }
-
-    clearOrderList(){
-        this.orderProducts = []
-        this.setState({orderList:[] , orderPrice: 0})
-    }
-
-
     openOrderList(){
-        if (window.basketVisible == "visible") {
-            window.basketVisible = "hidden"
-            this.setState({visible:window.basketVisible})
+        if (this.state.basket_is_visible == "visible") {
+            this.setState({basket_is_visible:"hidden"})
         }
         else {
-            window.basketVisible = "visible"
-            this.setState({visible:window.basketVisible})
+            this.setState({basket_is_visible:"visible"})
         }
-        console.log(window.basketVisible)
+        console.log(this.state.basket_is_visible)
     }
 
     render() {
@@ -180,36 +140,7 @@ class Menu extends React.Component {
                             })
                         }
                     </div>
-                    <div className="basket" style={{visibility: this.state.visible}}>
-                        {
-                            this.state.orderList.map((product, index) => {
-                                    return (
-                                        <div className="order_dish">
-                                            <img className="card-img-top order_product_img" src={product.image}/>
-                                            <div className="card-title">
-                                                <div>{product.title}</div>
-                                                <div className="row">
-                                                    <span className="col-sm dish-name">{product.price}руб.</span>
-                                                    <span className="col-sm dish-price">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{product.quantity}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                }
-                            )
-                        }
-                        <div className="dividing_line" />
-                        <div className="row order_price">
-                            <span>Итог:&nbsp; </span>
-                            <span>{this.state.orderPrice} руб</span>
-                        </div>
-                        <div className="row">
-                            <button type="button" className="btn btn-secondary col-sm create_order_btn"
-                                    onClick={event => this.createOrder()}>Оформить</button>
-                            <button type="button" className="btn btn-secondary col-sm clear_order_btn"
-                                    onClick={event => this.clearOrderList()}>Очистить</button>
-                        </div>
-                    </div>
+                    <Basket basket_is_visible={this.state.basket_is_visible}/>
                 </div>
             </div>
 
