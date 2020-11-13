@@ -1,0 +1,159 @@
+@media (min-width: 768px){
+    .basket{
+        margin: 15px;
+        background-color: #FBF4F4;
+        border-radius: 15px;
+        position: fixed;
+        top: 80px;
+        right: 0;
+        width: 20%;
+        height: auto;
+        padding: 10px;
+        overflow: auto;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    .dividing_line{
+        height: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        background-color: #E7B57F;
+    }
+
+    .order_dish{
+        margin: 5px;
+        text-align: left;
+        background-color: #a6c085;
+        font-family: Montserrat;
+        font-size: 8pt;
+        color:white;
+        border-radius: 15px;
+    }
+
+    .order_dish_row{
+        margin: 0;
+    }
+
+    .order_dish img{
+        padding: 10px;
+        max-width: 32%;
+        max-height: 70%;
+        border-radius: 15px;
+    }
+
+    .basket_dish_name{
+        font-size: 5pt;
+        font-weight: bold;
+        color: white;
+    }
+
+    .price_row span{
+        font-size: 7pt;
+        font-weight: bold;
+        color: #A44A3F;
+    }
+
+    .create_order_btn{
+        margin-left: 10px;
+        background-color: #F89090;
+        border-radius: 25px;
+        border-color: #FBF4F4;
+        font-size: 11pt;
+    }
+
+    .order_price{
+        margin-left: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #E7B57F;
+    }
+
+    .clear_order_btn{
+        margin-right: 10px;
+        background-color: #C75648;
+        border-radius: 25px;
+        border-color: #FBF4F4;
+        font-size: 11pt;
+    }
+}
+
+@media (min-width: 1200px) {
+    .basket{
+        margin: 15px;
+        background-color: #FBF4F4;
+        border-radius: 15px;
+        position: fixed;
+        top: 80px;
+        right: 0;
+        width: 20%;
+        height: auto;
+        padding: 10px;
+        overflow: auto;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    .dividing_line{
+        height: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        background-color: #E7B57F;
+    }
+
+    .order_dish{
+        margin: 5px;
+        text-align: left;
+        background-color: #a6c085;
+        font-family: Montserrat;
+        font-size: 8pt;
+        color:white;
+        border-radius: 15px;
+    }
+
+    .order_dish_row{
+        margin: 0;
+    }
+
+    .order_dish img{
+        padding: 10px;
+        max-width: 32%;
+        max-height: 70%;
+        border-radius: 15px;
+    }
+
+    .basket_dish_name{
+        font-size: 11pt;
+        font-weight: bold;
+        color: white;
+    }
+
+    .price_row span{
+        font-size: 10pt;
+        font-weight: bold;
+        color: #A44A3F;
+    }
+
+    .create_order_btn{
+        margin-left: 10px;
+        background-color: #F89090;
+        border-radius: 25px;
+        border-color: #FBF4F4;
+        font-size: 11pt;
+    }
+
+    .order_price{
+        margin-left: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #E7B57F;
+    }
+
+    .clear_order_btn{
+        margin-right: 10px;
+        background-color: #C75648;
+        border-radius: 25px;
+        border-color: #FBF4F4;
+        font-size: 11pt;
+    }
+}

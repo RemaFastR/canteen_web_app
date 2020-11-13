@@ -5,13 +5,18 @@ import * as axios from "axios";
 import siteLogo from "../../assets/images/Logo.png";
 import categoriesLogo from "../../assets/images/lgmenu.png";
 import orderLogo from "../../assets/images/lgkorz.png";
-import Basket from "../Utility/Basket";
+import addLogo from "../../assets/images/add_icon.png"
+import Basket from "../Utility/Basket/Basket";
+import {NotificationContainer} from "react-notifications";
+import Counter from "../Utility/Counter/Counter";
 
 class Menu extends React.Component {
     constructor() {
         super();
+        this.child = React.createRef();
         this.state = {
             categories: [],
+            orderList: [],
             basket_is_visible: "visible"
         }
     }
@@ -19,7 +24,16 @@ class Menu extends React.Component {
     componentDidMount() {
         axios.get(`https://canteen-chsu.ru/api/menu?CANTEEN-API-KEY=733fb9c1-db7f-4c0f-9cc0-59877c6cd8cf`).then(response => {
             this.setState({categories: response.data})
+            console.log(response.data)
         })
+    }
+
+    orderProducts = []
+
+    calculateOrderPrice(orderList) {
+        let price = 0;
+        this.orderProducts.forEach(element => price += element.price * element.quantity);
+        this.setState({orderPrice: price})
     }
 
     addInOrder(product) {
@@ -28,28 +42,31 @@ class Menu extends React.Component {
             id: product.id,
             title: product.title,
             price: product.price,
-            quantity: 1
+            quantity: this.child.current.returnCount()
         }
-        var contains = this.orderProducts.some(elem =>{
+        var contains = this.orderProducts.some(elem => {
             return JSON.stringify(this.productForOrder) === JSON.stringify(elem);
         });
-        if (contains != false){
+        if (contains != false) {
             this.orderProducts.find(prod => prod.id == this.productForOrder.id).quantity++
-        }
-        else this.orderProducts.push(this.productForOrder)
-        this.setState({orderList:this.orderProducts})
+        } else this.orderProducts.push(this.productForOrder)
+        this.setState({orderList: this.orderProducts})
         this.calculateOrderPrice(this.orderProducts)
         console.log(this.orderProducts)
     }
 
-    openOrderList(){
+    openOrderList() {
         if (this.state.basket_is_visible == "visible") {
-            this.setState({basket_is_visible:"hidden"})
-        }
-        else {
-            this.setState({basket_is_visible:"visible"})
+            this.setState({basket_is_visible: "hidden"})
+        } else {
+            this.setState({basket_is_visible: "visible"})
         }
         console.log(this.state.basket_is_visible)
+    }
+
+    clearOrderList() {
+        this.orderProducts = null
+        this.setState({orderList: [], orderPrice: 0})
     }
 
     render() {
@@ -84,7 +101,8 @@ class Menu extends React.Component {
                                 <div className="input-group-prepend">
                                     <div className="input-group-text"><i className="fas fa-search"></i></div>
                                 </div>
-                                <input type="text" className="form-control" id="inlineFormInputGroup" placeholder="Поиск"/>
+                                <input type="text" className="form-control" id="inlineFormInputGroup"
+                                       placeholder="Поиск"/>
                             </div>
                         </div>
                         <div className="col-2 phoneHeader">
@@ -92,39 +110,78 @@ class Menu extends React.Component {
                         </div>
                         <div className="col-2 basketHeader">
                             <button className="btn dropdownHeader" type="button" id="dropdownMenuButtonKorz"
-                                    data-toggle="dropdown" aria-expanded="false" onClick={event => this.openOrderList()}>
+                                    data-toggle="dropdown" aria-expanded="false"
+                                    onClick={event => this.openOrderList()}>
                                 <img src={orderLogo}/> Корзина
                             </button>
-                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButtonKorz" >
+                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButtonKorz">
                             </ul>
                         </div>
                     </div>
                 </div>
+              {/*  <div class="row-cols-4 menuHeader">
+                    <span class="col-1"><img src="resources/Logo.png"/></span>
+                    <span class="col-3 menuHeaderName">Меню</span>
+                </div>
+                <div class="row categories">
+                    <div class="col-5 mb-1 ml-1 dish"><a href="soup.html" style={{color: "white"}}><img src="resources/soup.png"/>Супы</a></div>
+                    <div class="col-5 mb-1 ml-1 dish"><a href="garnir.html" style={{color: "white"}}><img src="resources/gg.png"/>Гарниры</a></div>
+
+                    <div class="col-5 mb-1 ml-1 dish"><a href="myaso.html" style={{color: "white"}}><img src="resources/myaso.png"/>Мясные блюда</a></div>
+                    <div class="col-5 mb-1 ml-1 dish"><a href="salaty.html" style={{color: "white"}}><img src="resources/salat.png"/>Салаты</a></div>
+
+                    <div class="col-5 mb-1 ml-1 dish"><a href="vypechka.html" style={{color: "white"}}><img src="resources/pirog.png"/>Выпечка</a></div>
+                    <div class="col-5 mb-1 ml-1 dish"><a href="voda.html" style={{color: "white"}}><img src="resources/voda.png"/>Напитки</a></div>
+
+                    <div class="col-5 mb-1 ml-1 dish"><a href="desert.html" style={{color: "white"}}><img src="resources/desert.png"/>Десерты</a></div>
+                </div>
+                <div class="row">
+                    <div class="footermenu">
+                        <span class="lgmenu"><a href="start.html" style={{color: "white"}}><img src="resources/lgmenu.png"/></a></span>
+                </div>
+                <div class="footerkorz">
+                    <span class="lgkorz"><a href="zakaz.html" style={{color: "white"}}><img src="resources/lgkorz.png"/></a></span>
+            </div>
+    </div>*/}
                 <div className="background">
                     <div className="container pcContainer">
+                        <div className="noti">
+                            <NotificationContainer/>
+                        </div>
+
                         {
                             this.state.categories.map((category, index) => {
                                 return (
                                     <div className="row menu">
-                                        <div className="col-12" id={index}>
+                                        <div className="col-12 col-lg-9 col-md-8 col-xl-10" id={index}>
                                             {category.name}
                                             <hr/>
                                             <div className="row">
                                                 {
                                                     category.products.map((product, index) => {
+                                                        const {id, composition, description, image, price, title, weight, count = 1 } = product
                                                         return (
-                                                            <div className="col-md-4 col-lg-3 col-xl-2">
-                                                                <div className="card mx-auto mb-1" onClick={event => {
-                                                                    this.addInOrder(product)
-                                                                }}>
+                                                            <div className="col-4 col-md-6 col-lg-4 col-xl-3">
+                                                                <div className="card mx-auto mb-1" >
                                                                     <div className="dish">
-                                                                        <img className="card-img-top" src={product.image}/>
+                                                                        <img className="card-img-top"
+                                                                             src={image}/>
                                                                         <div className="card-title">
-                                                                            <div className="row">
                                                                             <span
-                                                                                className="col-7 dish-name">{product.title}</span>
+                                                                                className="col-md-6 dish-name">{title}</span>
+                                                                            <div className="row product_info_row justify-content-between p-2">
+                                                                                <span className=" dish-price">{weight} гр</span>
                                                                                 <span
-                                                                                    className="col-4 dish-price">{product.price} Р</span>
+                                                                                    className=" dish-price">{price} ₽</span>
+                                                                            </div>
+                                                                            <div className="row count_row justify-content-between align-items-center">
+                                                                                <Counter ref={this.child} count={count}/>
+                                                                                <div className="col-md-6 col-lg-6
+                                                                                    col-xl-6 col-6 addInOrder" onClick={event => {
+                                                                                    this.addInOrder(product)
+                                                                                }}>
+                                                                                    <img src={addLogo}/>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -140,7 +197,8 @@ class Menu extends React.Component {
                             })
                         }
                     </div>
-                    <Basket basket_is_visible={this.state.basket_is_visible}/>
+                    <Basket basket_is_visible={this.state.basket_is_visible} orderList={this.state.orderList}
+                            orderPrice={this.state.orderPrice} clearOrderList={this.clearOrderList}/>
                 </div>
             </div>
 

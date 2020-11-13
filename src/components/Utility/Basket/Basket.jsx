@@ -1,5 +1,9 @@
 import React from 'react'
 import * as axios from "axios";
+import './Basket.modle.css'
+import './Basket_media.module.css'
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+
 
 class Basket extends React.Component{
     constructor() {
@@ -15,6 +19,13 @@ class Basket extends React.Component{
         this.setState({visible:this.props.basket_is_visible})
     }
 
+    createNotification = (data) => {
+        return (
+            NotificationManager.success("Ваш заказ выполнен, номер заказа - " + data, 'Ваш заказ принят')
+        )
+
+    };
+
 
     createOrder(){
         let orderListForSend = []
@@ -27,45 +38,37 @@ class Basket extends React.Component{
                 'CANTEEN-API-KEY': '733fb9c1-db7f-4c0f-9cc0-59877c6cd8cf'
             }
         }
-        this.orderProducts.forEach(element => orderListForSend.push({ id: element.id, quantity: element.quantity}));
+        this.props.orderList.forEach(element => orderListForSend.push({ id: element.id, quantity: element.quantity}));
         console.log(JSON.stringify(object))
         axios.post('https://canteen-chsu.ru/api/orders', JSON.stringify(object),config).then((response) => {
             console.log(response.data)
-            alert("Ваш заказ выполнен, номер заказа - " + response.data.id)
+            //alert("Ваш заказ выполнен, номер заказа - " + response.data.id)
+            this.createNotification(response.data.id)
         })
     }
 
-    orderProducts= []
     productForOrder = {
         id: null,
         quantity: 0
     }
 
-    calculateOrderPrice(orderList){
-        let price = 0;
-        this.orderProducts.forEach(element => price += element.price * element.quantity);
-        this.setState({orderPrice:price})
-    }
-
-    clearOrderList(){
-        this.orderProducts = []
-        this.setState({orderList:[] , orderPrice: 0})
-    }
 
     render() {
         if (this.state.visible == "visible"){
             return (
-                <div className="basket" style={{visibility: this.state.visible}}>
+                <div className="basket" style={{visibility: this.props.basket_is_visible}}>
                     {
-                        this.state.orderList.map((product, index) => {
+                        this.props.orderList.map((product, index) => {
                                 return (
                                     <div className="order_dish">
-                                        <img className="card-img-top order_product_img" src={product.image}/>
-                                        <div className="card-title">
-                                            <div>{product.title}</div>
-                                            <div className="row">
-                                                <span className="col-sm dish-name">{product.price}руб.</span>
-                                                <span className="col-sm dish-price">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{product.quantity}</span>
+                                        <div className="row order_dish_row">
+                                            <img className="col-sm"  src={product.image}/>
+                                            <div className="col-sm">
+                                                <div className="basket_dish_name">{product.title}</div>
+                                                <div className="row price_row">
+                                                    <span className="col-sm basket_dish_price">{product.price}руб.</span>
+                                                    <span className="col-sm basket_dish_count">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{product.quantity}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -76,14 +79,15 @@ class Basket extends React.Component{
                     <div className="dividing_line" />
                     <div className="row order_price">
                         <span>Итог:&nbsp; </span>
-                        <span>{this.state.orderPrice} руб</span>
+                        <span>{this.props.orderPrice} руб</span>
                     </div>
                     <div className="row">
                         <button type="button" className="btn btn-secondary col-sm create_order_btn"
                                 onClick={event => this.createOrder()}>Оформить</button>
                         <button type="button" className="btn btn-secondary col-sm clear_order_btn"
-                                onClick={event => this.clearOrderList()}>Очистить</button>
+                                onClick={event => this.props.clearOrderList()}>Очистить</button>
                     </div>
+
                 </div>
             )
         }
