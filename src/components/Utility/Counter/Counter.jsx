@@ -1,7 +1,8 @@
 import React from 'react'
+import './Counter.module.css'
 
 let ret = 0
-export  default  class Counter extends React.Component{
+class Counter extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -13,32 +14,42 @@ export  default  class Counter extends React.Component{
         this.setState({count: this.props.count});
     }
 
+    decrement(count){
+        if (count > 1){
+            count--
+            ret = count
+            this.setState({count: count});
+        }
+    }
 
-    increment(count){
+    increment(count) {
         count++
         ret = count
         this.setState({count: count});
     }
 
-    returnCount(){
+    returnCount() {
         console.log(ret)
-        debugger
         return ret
     }
 
     render() {
         return (
-            <div className="row">
-                <div className="col-4">
-                    -
+            <div className="row  counter ">
+                <div className="col-3 dec_btn">
+                    <button type="button" className="btn btn-success col-3" onClick={() => {
+                        this.decrement(this.state.count)
+                    }}>-</button>
                 </div>
-                <div className="col-4">{this.state.count}</div>
-                <div className="col-4" onClick={() => {
-                    this.increment(this.state.count)
-                }}>
-                    +
+                <div className="col-3">{this.state.count}</div>
+                <div className="col-3 inc_btn">
+                    <button type="button" className="btn btn-success col-3" onClick={() => {
+                        this.increment(this.state.count)
+                    }}>+</button>
                 </div>
             </div>
         )
     }
 }
+
+export default Counter;

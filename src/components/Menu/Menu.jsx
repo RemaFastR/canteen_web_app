@@ -45,10 +45,12 @@ class Menu extends React.Component {
             quantity: this.child.current.returnCount()
         }
         var contains = this.orderProducts.some(elem => {
-            return JSON.stringify(this.productForOrder) === JSON.stringify(elem);
+            return this.productForOrder.id === elem.id;
         });
+        debugger
         if (contains != false) {
-            this.orderProducts.find(prod => prod.id == this.productForOrder.id).quantity++
+            let tempCount = this.orderProducts.find(prod => prod.id == this.productForOrder.id).quantity
+            this.orderProducts.find(prod => prod.id == this.productForOrder.id).quantity = tempCount + this.productForOrder.quantity
         } else this.orderProducts.push(this.productForOrder)
         this.setState({orderList: this.orderProducts})
         this.calculateOrderPrice(this.orderProducts)
@@ -119,30 +121,7 @@ class Menu extends React.Component {
                         </div>
                     </div>
                 </div>
-              {/*  <div class="row-cols-4 menuHeader">
-                    <span class="col-1"><img src="resources/Logo.png"/></span>
-                    <span class="col-3 menuHeaderName">Меню</span>
-                </div>
-                <div class="row categories">
-                    <div class="col-5 mb-1 ml-1 dish"><a href="soup.html" style={{color: "white"}}><img src="resources/soup.png"/>Супы</a></div>
-                    <div class="col-5 mb-1 ml-1 dish"><a href="garnir.html" style={{color: "white"}}><img src="resources/gg.png"/>Гарниры</a></div>
 
-                    <div class="col-5 mb-1 ml-1 dish"><a href="myaso.html" style={{color: "white"}}><img src="resources/myaso.png"/>Мясные блюда</a></div>
-                    <div class="col-5 mb-1 ml-1 dish"><a href="salaty.html" style={{color: "white"}}><img src="resources/salat.png"/>Салаты</a></div>
-
-                    <div class="col-5 mb-1 ml-1 dish"><a href="vypechka.html" style={{color: "white"}}><img src="resources/pirog.png"/>Выпечка</a></div>
-                    <div class="col-5 mb-1 ml-1 dish"><a href="voda.html" style={{color: "white"}}><img src="resources/voda.png"/>Напитки</a></div>
-
-                    <div class="col-5 mb-1 ml-1 dish"><a href="desert.html" style={{color: "white"}}><img src="resources/desert.png"/>Десерты</a></div>
-                </div>
-                <div class="row">
-                    <div class="footermenu">
-                        <span class="lgmenu"><a href="start.html" style={{color: "white"}}><img src="resources/lgmenu.png"/></a></span>
-                </div>
-                <div class="footerkorz">
-                    <span class="lgkorz"><a href="zakaz.html" style={{color: "white"}}><img src="resources/lgkorz.png"/></a></span>
-            </div>
-    </div>*/}
                 <div className="background">
                     <div className="container pcContainer">
                         <div className="noti">
@@ -176,8 +155,8 @@ class Menu extends React.Component {
                                                                             </div>
                                                                             <div className="row count_row justify-content-between align-items-center">
                                                                                 <Counter ref={this.child} count={count}/>
-                                                                                <div className="col-md-6 col-lg-6
-                                                                                    col-xl-6 col-6 addInOrder" onClick={event => {
+                                                                                <div className="col-md-6 col-lg-4
+                                                                                    col-xl-4 col-6 addInOrder" onClick={event => {
                                                                                     this.addInOrder(product)
                                                                                 }}>
                                                                                     <img src={addLogo}/>

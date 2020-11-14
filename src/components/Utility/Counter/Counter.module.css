@@ -1,0 +1,29 @@
+@media (min-width: 768px){
+    .counter{
+        margin: 0;
+        padding: 0;
+    }
+    .inc_btn, dec_btn{
+        text-align: center;
+    }
+}
+@media (min-width: 992px){
+    .counter{
+        margin: 0;
+        padding: 0;
+    }
+    .inc_btn, dec_btn{
+        text-align: center;
+    }
+}
+
+@media (min-width: 1200px) {
+    .counter{
+        margin: 0;
+        padding: 0;
+    }
+    .inc_btn, dec_btn{
+        text-align: center;
+    }
+}
+
