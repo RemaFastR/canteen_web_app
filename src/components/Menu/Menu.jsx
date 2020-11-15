@@ -90,7 +90,7 @@ class Menu extends React.Component {
                                     {
                                         this.state.categories.map((category, index) => {
                                             return (
-                                                <div className="col-6"><a className="dropdown-item"
+                                                <div className="col-10 col-md-6 col-lg-6 col-xl-6"><a className="dropdown-item"
                                                                           href={`#${index}`}>{category.name}</a></div>
                                             )
                                         })
@@ -132,7 +132,7 @@ class Menu extends React.Component {
                             this.state.categories.map((category, index) => {
                                 return (
                                     <div className="row menu">
-                                        <div className="col-12 col-lg-9 col-md-8 col-xl-10" id={index}>
+                                        <div className="col-sm-8 col-lg-9 col-md-8 col-xl-10" id={index}>
                                             {category.name}
                                             <hr/>
                                             <div className="row">
@@ -140,7 +140,7 @@ class Menu extends React.Component {
                                                     category.products.map((product, index) => {
                                                         const {id, composition, description, image, price, title, weight, count = 1 } = product
                                                         return (
-                                                            <div className="col-4 col-md-6 col-lg-4 col-xl-3">
+                                                            <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3">
                                                                 <div className="card mx-auto mb-1" >
                                                                     <div className="dish">
                                                                         <img className="card-img-top"
@@ -155,7 +155,7 @@ class Menu extends React.Component {
                                                                             </div>
                                                                             <div className="row count_row justify-content-between align-items-center">
                                                                                 <Counter ref={this.child} count={count}/>
-                                                                                <div className="col-md-6 col-lg-4
+                                                                                <div className="col-sm-4 col-md-6 col-lg-4
                                                                                     col-xl-4 col-6 addInOrder" onClick={event => {
                                                                                     this.addInOrder(product)
                                                                                 }}>

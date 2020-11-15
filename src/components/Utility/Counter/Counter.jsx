@@ -36,13 +36,13 @@ class Counter extends React.Component {
     render() {
         return (
             <div className="row  counter ">
-                <div className="col-3 dec_btn">
+                <div className="col-3 col-sm-3 dec_btn">
                     <button type="button" className="btn btn-success col-3" onClick={() => {
                         this.decrement(this.state.count)
                     }}>-</button>
                 </div>
-                <div className="col-3">{this.state.count}</div>
-                <div className="col-3 inc_btn">
+                <div className="col-3 col-sm-1">{this.state.count}</div>
+                <div className="col-3 col-sm-3 inc_btn">
                     <button type="button" className="btn btn-success col-3" onClick={() => {
                         this.increment(this.state.count)
                     }}>+</button>
