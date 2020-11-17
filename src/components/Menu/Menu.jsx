@@ -1,13 +1,15 @@
 import React from 'react'
 import '../../assets/css/bootstrap.min.css'
 import '../../assets/css/style.css'
+import '../Utility/Counter/Counter.module.css'
 import * as axios from "axios";
 import siteLogo from "../../assets/images/Logo.png";
 import categoriesLogo from "../../assets/images/lgmenu.png";
 import orderLogo from "../../assets/images/lgkorz.png";
 import addLogo from "../../assets/images/add_icon.png"
 import Basket from "../Utility/Basket/Basket";
-import {NotificationContainer} from "react-notifications";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css"
 import Counter from "../Utility/Counter/Counter";
 
 class Menu extends React.Component {
@@ -17,15 +19,29 @@ class Menu extends React.Component {
         this.state = {
             categories: [],
             orderList: [],
+            orderPrice: 0,
             basket_is_visible: "visible"
         }
     }
 
     componentDidMount() {
-        axios.get(`https://canteen-chsu.ru/api/menu?CANTEEN-API-KEY=733fb9c1-db7f-4c0f-9cc0-59877c6cd8cf`).then(response => {
-            this.setState({categories: response.data})
-            console.log(response.data)
-        })
+        try {
+            axios.get(`https://canteen-chsu.ru/api/menu?CANTEEN-API-KEY=733fb9c1-db7f-4c0f-9cc0-59877c6cd8cf`).then(response => {
+                this.setState({categories: response.data})
+                console.log(response.data)
+            })
+        }
+        catch (e) {
+            toast.error(e, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+        }
     }
 
     orderProducts = []
@@ -47,7 +63,6 @@ class Menu extends React.Component {
         var contains = this.orderProducts.some(elem => {
             return this.productForOrder.id === elem.id;
         });
-        debugger
         if (contains != false) {
             let tempCount = this.orderProducts.find(prod => prod.id == this.productForOrder.id).quantity
             this.orderProducts.find(prod => prod.id == this.productForOrder.id).quantity = tempCount + this.productForOrder.quantity
@@ -66,14 +81,29 @@ class Menu extends React.Component {
         console.log(this.state.basket_is_visible)
     }
 
-    clearOrderList() {
-        this.orderProducts = null
-        this.setState({orderList: [], orderPrice: 0})
+    clearOrder = () => {
+        this.orderProducts = []//this.child.current.clearOrderList()
+        this.setState({orderList: this.orderProducts, orderPrice: 0})
+    }
+
+    deleteElement = (product) =>{
+        this.deleteItem(this.orderProducts, product)
+        this.setState({orderList: this.orderProducts})
+        this.calculateOrderPrice(this.orderProducts)
+    }
+
+    deleteItem(arr, value){
+        for( var i = 0; i < arr.length; i++){
+            if ( arr[i] === value) {
+                arr.splice(i, 1);
+            }
+        }
     }
 
     render() {
         return (
             <div className="main">
+                <ToastContainer />
                 <div className="container-fluid header">
                     <div className="row headerRow">
                         <div className="col-1"></div>
@@ -98,16 +128,8 @@ class Menu extends React.Component {
                                 </div>
                             </ul>
                         </div>
-                        <div className="col-2 searchHeader">
-                            <div className="input-group mb-2">
-                                <div className="input-group-prepend">
-                                    <div className="input-group-text"><i className="fas fa-search"></i></div>
-                                </div>
-                                <input type="text" className="form-control" id="inlineFormInputGroup"
-                                       placeholder="Поиск"/>
-                            </div>
-                        </div>
-                        <div className="col-2 phoneHeader">
+
+                        <div className="col-3 phoneHeader">
                             +7 800 555-35-35
                         </div>
                         <div className="col-2 basketHeader">
@@ -125,7 +147,6 @@ class Menu extends React.Component {
                 <div className="background">
                     <div className="container pcContainer">
                         <div className="noti">
-                            <NotificationContainer/>
                         </div>
 
                         {
@@ -140,7 +161,7 @@ class Menu extends React.Component {
                                                     category.products.map((product, index) => {
                                                         const {id, composition, description, image, price, title, weight, count = 1 } = product
                                                         return (
-                                                            <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                                                            <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3 products">
                                                                 <div className="card mx-auto mb-1" >
                                                                     <div className="dish">
                                                                         <img className="card-img-top"
@@ -155,6 +176,7 @@ class Menu extends React.Component {
                                                                             </div>
                                                                             <div className="row count_row justify-content-between align-items-center">
                                                                                 <Counter ref={this.child} count={count}/>
+
                                                                                 <div className="col-sm-4 col-md-6 col-lg-4
                                                                                     col-xl-4 col-6 addInOrder" onClick={event => {
                                                                                     this.addInOrder(product)
@@ -177,7 +199,7 @@ class Menu extends React.Component {
                         }
                     </div>
                     <Basket basket_is_visible={this.state.basket_is_visible} orderList={this.state.orderList}
-                            orderPrice={this.state.orderPrice} clearOrderList={this.clearOrderList}/>
+                            orderPrice={this.state.orderPrice} clear={this.clearOrder} deleteElem={this.deleteElement}/>
                 </div>
             </div>
 

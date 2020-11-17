@@ -1,12 +1,12 @@
 import React from 'react'
 import './Counter.module.css'
 
-let ret = 0
+let ret = 1
 class Counter extends React.Component {
     constructor() {
         super();
         this.state = {
-            count: 0
+            count: 1
         }
     }
 
@@ -30,18 +30,20 @@ class Counter extends React.Component {
 
     returnCount() {
         console.log(ret)
-        return ret
+        let temp = ret
+        ret = 1
+        return temp
     }
 
     render() {
         return (
-            <div className="row  counter ">
-                <div className="col-3 col-sm-3 dec_btn">
+            <div className="row  counter">
+                <div className="col-3 col-sm-3 dec_btn count_btn">
                     <button type="button" className="btn btn-success col-3" onClick={() => {
                         this.decrement(this.state.count)
                     }}>-</button>
                 </div>
-                <div className="col-3 col-sm-1">{this.state.count}</div>
+                <div className="col-5 col-sm-1 col-sm-4 col-md-4 col-lg-4 col-xl-4">{this.state.count}</div>
                 <div className="col-3 col-sm-3 inc_btn">
                     <button type="button" className="btn btn-success col-3" onClick={() => {
                         this.increment(this.state.count)

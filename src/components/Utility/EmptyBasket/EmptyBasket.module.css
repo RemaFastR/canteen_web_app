@@ -1,0 +1,22 @@
+.empty_basket_logo {
+    margin: 15px;
+    height: 150px
+}
+
+.empty_basket{
+    text-align: center;
+}
+
+.empty_basket_label{
+    font-size: 14pt;
+}
+
+@media (min-width: 576px) and (max-width: 767px){
+    .empty_basket_logo {
+        margin: 15px;
+        height: 75px
+    }
+    .empty_basket{
+        text-align: center;
+    }
+}

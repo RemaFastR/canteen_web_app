@@ -1,3 +1,16 @@
+.count_btn{
+    text-align:center;
+    padding: 0;
+}
+.counter{
+    text-align: center;
+    margin: 5%;
+}
+
+.counter button{
+    text-align: center;
+}
+
 @media (min-width: 768px){
     .counter{
         margin: 0;
@@ -5,6 +18,14 @@
     }
     .inc_btn, dec_btn{
         text-align: center;
+    }
+    .count_btn{
+        text-align:center;
+        padding: 0;
+    }
+    .counter{
+        text-align: center;
+        vertical-align: center;
     }
 }
 @media (min-width: 992px){
@@ -15,15 +36,31 @@
     .inc_btn, dec_btn{
         text-align: center;
     }
+    .count_btn{
+        text-align:center;
+        padding: 0;
+    }
+    .counter{
+        text-align: center;
+        vertical-align: center;
+    }
 }
 
 @media (min-width: 1200px) {
     .counter{
-        margin: 0;
+        margin: 5%;
         padding: 0;
     }
     .inc_btn, dec_btn{
         text-align: center;
+    }
+    .count_btn{
+        text-align:center;
+        padding: 0;
+    }
+    .counter{
+        text-align: center;
+        vertical-align: center;
     }
 }
 

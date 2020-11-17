@@ -58,7 +58,6 @@
 }
 .background {
 	padding-top: 20px;
-	background-color: #e3d9d9;
 	height: 100%;
 	width: auto;
     /*overflow: auto;
@@ -94,6 +93,10 @@
 }
 .sales {
 	display: none;
+}
+
+.products{
+	padding: 1%;
 }
 
 @media (min-width: 576px) and (max-width: 767px){
@@ -179,6 +182,7 @@
 
 	.phoneHeader {
 		padding-top: 2%;
+		padding-left: 7%;
 		display: block;
 		font-size: 10pt;
 		color: #403737;
@@ -545,7 +549,7 @@
 		margin: 0px;
 		border-radius: 15px;
 		/*width: 100%;*/
-		height: 120px;
+		height: 150px;
 	}
 	.dish-name {
 		text-align: left;

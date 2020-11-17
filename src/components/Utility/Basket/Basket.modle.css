@@ -5,14 +5,19 @@
     position: fixed;
     top: 80px;
     right: 0;
-    width: 20%;
-    height: auto;
+    width: 25%;
+    height: 70%;
     padding: 10px;
-    overflow: auto;
+    overflow: hidden;
     overflow-x: hidden;
-    overflow-y: hidden;
 }
 
+.order_products{
+    height: 70%;
+    overflow: scroll;
+    overflow-x: hidden;
+
+}
 .dividing_line{
     height: 5px;
     margin-top: 5px;
@@ -76,20 +81,29 @@
     font-size: 11pt;
 }
 
+.delete_btn{
+    padding: -20px;
+}
+
 @media (min-width: 576px) and (max-width: 767px){
     .basket {
-        margin: 10px;
+        margin: 15px;
         background-color: #FBF4F4;
         border-radius: 15px;
         position: fixed;
-        top: 60px;
+        top: 80px;
         right: 0;
-        width: 30%;
-        height: auto;
+        width: 60%;
+        height: 70%;
         padding: 10px;
-        overflow: auto;
+        overflow: hidden;
         overflow-x: hidden;
-        overflow-y: hidden;
+    }
+    .order_products{
+        height: 80%;
+        overflow: scroll;
+        overflow-x: hidden;
+
     }
 
     .dividing_line {
@@ -154,6 +168,12 @@
         border-color: #FBF4F4;
         font-size: 9pt;
     }
+    .delete_btn{
+        text-align: center;
+        height: 25px;
+        font-size: 9pt;
+        border-radius: 15px;
+    }
 
 }
 
@@ -165,14 +185,19 @@
         position: fixed;
         top: 80px;
         right: 0;
-        width: 30%;
-        height: auto;
+        width: 25%;
+        height: 70%;
         padding: 10px;
-        overflow: auto;
+        overflow: hidden;
         overflow-x: hidden;
-        overflow-y: hidden;
     }
 
+    .order_products{
+        height: 70%;
+        overflow: scroll;
+        overflow-x: hidden;
+
+    }
     .dividing_line{
         height: 3px;
         margin-top: 5px;
@@ -196,7 +221,7 @@
 
     .order_dish img{
         padding: 5px;
-        max-width: 32%;
+        max-width: 40%;
         max-height: 70%;
         border-radius: 15px;
     }
@@ -235,6 +260,14 @@
         border-color: #FBF4F4;
         font-size: 11pt;
     }
+
+    .delete_btn{
+        text-align: center;
+        height: 25px;
+        font-size: 7pt;
+        border-radius: 15px;
+        border-radius: 15px;
+    }
 }
 
 @media (min-width: 990px){
@@ -245,12 +278,17 @@
         position: fixed;
         top: 80px;
         right: 0;
-        width: 30%;
-        height: auto;
+        width: 25%;
+        height: 70%;
         padding: 10px;
-        overflow: auto;
+        overflow: hidden;
         overflow-x: hidden;
-        overflow-y: hidden;
+    }
+    .order_products{
+        height: 80%;
+        overflow: scroll;
+        overflow-x: hidden;
+
     }
 
     .dividing_line{
@@ -276,7 +314,7 @@
 
     .order_dish img{
         padding: 5px;
-        max-width: 32%;
+        max-width: 40%;
         max-height: 70%;
         border-radius: 15px;
     }
@@ -315,6 +353,13 @@
         border-color: #FBF4F4;
         font-size: 11pt;
     }
+
+    .delete_btn{
+        text-align: center;
+        height: 25px;
+        font-size: 9pt;
+        border-radius: 15px;
+    }
 }
 
 @media (min-width: 1200px) {
@@ -326,11 +371,17 @@
         top: 80px;
         right: 0;
         width: 25%;
-        height: auto;
+        height: 70%;
         padding: 10px;
-        overflow: auto;
+        overflow: hidden;
         overflow-x: hidden;
-        overflow-y: hidden;
+    }
+
+    .order_products{
+        height: 70%;
+        overflow: scroll;
+        overflow-x: hidden;
+
     }
 
     .dividing_line{
@@ -394,5 +445,12 @@
         border-radius: 25px;
         border-color: #FBF4F4;
         font-size: 11pt;
+    }
+
+    .delete_btn{
+        text-align: center;
+        height: 35px;
+        font-size: 11pt;
+        border-radius: 15px;
     }
 }
